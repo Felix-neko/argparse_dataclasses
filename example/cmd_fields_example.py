@@ -30,13 +30,9 @@ class ExampleSettings(CmdParsingMixin):
         default=ExplosiveType.TNT, short_name="ex",
         help="Select correct explosive or the detonation speed will be calculated incorrectly")
 
-#
-settings = ExampleSettings(name="Setting DIMEX X-RAY detector")
-
 
 if __name__ == "__main__":
-
-    args = ExampleSettings.commandline_args(print_usage=True)
+    args = ExampleSettings.commandline_args(print_help=True)
     settings = ExampleSettings.process_commandline_args(args)
 
     print()

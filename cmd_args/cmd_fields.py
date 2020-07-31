@@ -67,13 +67,13 @@ class CmdParsingMixin:
         return parser
 
     @classmethod
-    def commandline_args(cls, print_usage: bool = False):
+    def commandline_args(cls, print_help: bool = False):
         """
         This will create a Namespace with commandline parser args...
         """
         parser = cls.create_commandline_parser()
-        if print_usage:
-            parser.print_usage()
+        if print_help:
+            parser.print_help()
         return parser.parse_args()
 
     @classmethod
