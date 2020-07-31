@@ -19,6 +19,9 @@ def str2bool(v):
 
 
 class CmdParsingMixin:
+    """
+    A mixin class that adds commandline parser manipulation methods...
+    """
     @classmethod
     def create_commandline_parser(cls, description: str = None):
         """
@@ -53,7 +56,6 @@ class CmdParsingMixin:
 
             required = fld.default == MISSING
 
-
             help = None
             if hasattr(fld, "help"):
                 if fld.help is not None:
@@ -65,11 +67,13 @@ class CmdParsingMixin:
         return parser
 
     @classmethod
-    def commandline_args(cls):
+    def commandline_args(cls, print_usage: bool = False):
         """
         This will create a Namespace with commandline parser args...
         """
         parser = cls.create_commandline_parser()
+        if print_usage:
+            parser.print_usage()
         return parser.parse_args()
 
     @classmethod
@@ -83,13 +87,17 @@ class CmdParsingMixin:
         assert is_dataclass(cls)
 
         arg_dict = vars(args)
-        settings = cls()
+        kwargs = {}
+
         for fld in fields(cls):
             argument = arg_dict[fld.name]
             if issubclass(fld.type, Enum):
                 argument = fld.type[argument]
-            setattr(settings, fld.name, argument)
+            kwargs[fld.name] = argument
+
+        settings = cls(**kwargs)
         return settings
+
 
 class CmdField(Field):
     __slots__ = ('name',
@@ -115,9 +123,21 @@ class CmdField(Field):
 
 def cmd_field(*, default=MISSING, default_factory=MISSING, init=True, repr=True,
           hash=None, compare=True, short_name=None, help=None, metadata=None):
+    """
+    Args:
+        default: same as in conveitional :function:`field` function = )
+        default_factory: same
+        init: same
+        repr: same
+        hash: same
+        compare: same
+        short_name: a short name abbreviation for commandline parser ()
+        help: a help message for this argument for commandline parser
+        metadata: also same as in conveitional :function:`field` function = )
+    Returns:
+        :class:`CmdField`
+    """
     if default is not MISSING and default_factory is not MISSING:
         raise ValueError('cannot specify both default and default_factory')
     return CmdField(default, default_factory, init, repr, hash, compare, short_name=short_name, help=help,
                     metadata=metadata)
-
-
