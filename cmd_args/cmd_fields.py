@@ -33,8 +33,9 @@ class CmdParsingMixin:
 
         for fld in fields(cls):
             name_args = ["--%s" % fld.name.replace("_", "-")]
-            if "short" in fld.metadata:
-                name_args.append("-%s" % fld.metadata["short"])
+            if hasattr(fld, "short_name"):
+                if fld.short_name is not None:
+                    name_args.append("-%s" % fld.short_name)
             if issubclass(fld.type, Enum):
                 choices = [elm.name for elm in fld.type]
             else:
@@ -50,9 +51,16 @@ class CmdParsingMixin:
             if issubclass(fld.type, Enum):
                 default = fld.default.name
 
-            help = fld.metadata["help"]
+            required = fld.default == MISSING
 
-            parser.add_argument(*name_args, type=arg_type, choices=choices, help=help, default=default)
+
+            help = None
+            if hasattr(fld, "help"):
+                if fld.help is not None:
+                    help = fld.help
+
+            parser.add_argument(*name_args, type=arg_type, choices=choices, help=help, default=default,
+                                required=required)
 
         return parser
 
@@ -83,13 +91,6 @@ class CmdParsingMixin:
             setattr(settings, fld.name, argument)
         return settings
 
-    @classmethod
-    def latex_itemlist(cls):
-        assert is_dataclass(cls)
-        for fld in fields(cls):
-            print("\\item \\texttt{%s}: %s." % (fld.name.replace("_", "\\_"), fld.metadata["help"]))
-
-
 class CmdField(Field):
     __slots__ = ('name',
                  'type',
@@ -118,3 +119,5 @@ def cmd_field(*, default=MISSING, default_factory=MISSING, init=True, repr=True,
         raise ValueError('cannot specify both default and default_factory')
     return CmdField(default, default_factory, init, repr, hash, compare, short_name=short_name, help=help,
                     metadata=metadata)
+
+
