@@ -45,14 +45,14 @@ print(settings)  # That's all, folks!
 And let's run this script from commandline:
 
 ```console
-$ python3 simple_example.py
+    $ python3 simple_example.py
 ```
 
 It will give us the error message.
 
 ```
-usage: simple_example.py [-h] --name NAME [--num-experiments NUM_EXPERIMENTS]
-simple_example.py: error: the following arguments are required: --name
+    usage: simple_example.py [-h] --name NAME [--num-experiments NUM_EXPERIMENTS]
+    simple_example.py: error: the following arguments are required: --name
 ```
 
 Okay, just as planned. As we can see, we've forgot a required commandline argument. Let's try again
@@ -62,7 +62,7 @@ Okay, just as planned. As we can see, we've forgot a required commandline argume
 ```
 
 This will print us the settings instance:
-    
+  
     SimpleSettings(name='DJ_BLYATMAN', num_experiments=33)
     
 Be careful: use `-` in commandline argument names and `_` in Python dataclass field names. It does make sense!
