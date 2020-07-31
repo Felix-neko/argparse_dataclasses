@@ -67,11 +67,11 @@ class CmdParsingMixin:
         return parser
 
     @classmethod
-    def commandline_args(cls, print_help: bool = False):
+    def commandline_args(cls, print_help: bool = False, description: str = None):
         """
         This will create a Namespace with commandline parser args...
         """
-        parser = cls.create_commandline_parser()
+        parser = cls.create_commandline_parser(description)
         if print_help:
             parser.print_help()
         return parser.parse_args()
@@ -98,6 +98,20 @@ class CmdParsingMixin:
         settings = cls(**kwargs)
         return settings
 
+    @classmethod
+    def build_from_commandline(cls, print_help: bool = False, description: str = None):
+        """
+        Args:
+            print_help (bool):
+            description(str):
+        Returns:
+            dataclass: an instnace of dataclass built by commandline_args
+        """
+
+        args = cls.commandline_args(print_help=print_help, description=description)
+        settings = cls.process_commandline_args(args)
+
+        return settings
 
 class CmdField(Field):
     __slots__ = ('name',

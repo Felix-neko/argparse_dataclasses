@@ -10,7 +10,7 @@ class ExplosiveType(IntEnum):
     TNT = auto()
     RDX = auto()
     PLASTIC = auto()
-    UNKNOWN= auto()
+    UNKNOWN = auto()
 
 
 @dataclass
