@@ -2,7 +2,7 @@ from enum import IntEnum, auto
 import argparse
 from dataclasses import dataclass, field
 
-from cmd_args.cmd_fields import cmd_field, CmdParsingMixin
+from cmd_args.boilerplate import cmd_field, CmdParsingMixin
 
 
 class ExplosiveType(IntEnum):
