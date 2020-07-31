@@ -1,3 +1,4 @@
-Hi!
+argparse_dataclasses
+=====================
 
-For my commandline Python scripts I often have to create experiment settings classes and corresponding commandline parsers. So I've moved the boilerplate code to dedicated module. 
+Dozens of times I had to create settings classes for my Python console scripts. Here's some utility boilerplate code that helps to create commandline parsers for dataclasses in a couple of lines = )
