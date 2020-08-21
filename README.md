@@ -82,6 +82,6 @@ Creating SimpleSettings instance from commandline args...
 optional arguments:
   -h, --help            show this help message and exit
   --name NAME
-  --num-experiments NUM_EXPERIMENTS``
+  --num-experiments NUM_EXPERIMENTS
 ```
  

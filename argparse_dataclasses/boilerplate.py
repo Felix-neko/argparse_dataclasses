@@ -1,5 +1,7 @@
+from typing import Type
 from enum import Enum
 from dataclasses import dataclass, field, fields, Field, MISSING, is_dataclass
+from dataclasses import _FIELD
 
 import argparse
 
@@ -23,7 +25,7 @@ class CmdParsingMixin:
     A mixin class that adds commandline parser manipulation methods...
     """
     @classmethod
-    def create_commandline_parser(cls, description: str = None):
+    def create_commandline_parser(cls: Type, description: str = None):
         """
         `MyDataClass` --> `argparse.ArgumentParser`
 

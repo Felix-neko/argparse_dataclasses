@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='argparse_dataclasses',
-    version='0.1.2',
+    version='0.1.3',
     packages=find_packages(),
     author="Felix Neko",
     author_email="felix-neko@list.ru",
